@@ -1,4 +1,4 @@
-# Game Dev Tutorial 3
+# Game Dev Tutorial 5
 
 <p align='Center'>
     <a href="https://github.com/sponsors/alexandresanlim">
@@ -9,75 +9,51 @@
     </a>
 </p>
 
-## 🕹️ Latihan Mandiri - Mechanics Exploration & Implementation 🕹️
+## 🎲 Latihan Mandiri - Membuat dan Menambah Variasi Aset 🎲
 
-- ### Double jump
+- ### Pressure Plate Into Object Removal & Accessible Area
 
-    > Player have the ability to perform jump twice in a short span course of action.
+    > Object interactivity complete each with its own sfx on player's interact
     
-    My implementation is having a jump input functions that firstly checks if the player is currently at floor base level to reset the jump count in order to counter "jump spamming" and the idea is that the y axis is influenced based on JUMP_POWER value, which in godot engine cases, y axis is inverted thus making it -y to go up instead.
+    Using on_body_entered, i can implement further it to play certain animations and moving the said platform so that the player gain access through the door.
 
     ```go
-        // Player.gd
+        // OnDoorEntered.gd
 
-        func handle_jump_input():
-            if is_on_floor() and jumpCount != 0:
-                jumpCount = 0
+        extends Area2D
 
-            if jumpCount < MAX_JUMP_COUNT and Input.is_action_just_pressed("jump"):
-                motion.y = -JUMP_POWER
-                jumpCount += 1
-    ```
+        func _on_OnDoorEntered_body_entered(body):
+            if body.get_name() == "Player":
+                $AnimatedSprite.play("opened")
+                $AudioStreamPlayer2D.play()
 
-- ### Dashing
-
-    > Player have the ability to perform a dashing action in the direction they are currently taking.
-
-    Since godot engine has its own Timer node for executing actions after a certain amount of time has elapsed. It's particularly useful for implementing time-based events, delays, or periodic actions, especially with player dashing mechanic. I started with having the start_dash functions to wait out the given duration param and having the is_dashing() for player speed terminations on whether or not the said player is still having the "dash speed" or normal moving speed.
-
-    ```go
-        // Dash.gd
-
-        onready var timer = $"Dash Timer"
-
-        func start_dash(duration):
-            timer.wait_time = duration
-            timer.start()
-
-        func is_dashing():
-            return !timer.is_stopped()
+        func _on_OnDoorEntered_body_exited(body):
+            if body.get_name() == "Player":
+                $AnimatedSprite.play("idle")
     ```
     ```go
-        // Player.gd
+        // PressurePlate.gd
 
-        var speed = get_speed()
+        extends Area2D
 
-        if Input.is_action_just_pressed("dash"):
-            dash.start_dash(DASH_LENGTH)
-        
-        func get_speed():
-            if dash.is_dashing():
-                return DASH_SPEED
-                
-            else:
-                return NORMAL_SPEED
+        func _on_PressurePlate_body_entered(body : KinematicBody2D):
+            if body.get_name() == "Player":
+                $AnimatedSprite.play("pressed")
+                $AudioStreamPlayer2D.play()
+                $Ground17.move_local_x(-154)
     ```
 
+    ![](Unaccessible.png)
+    ![](PressurePlatePressed.gif)
+    ![](DoorOpened.gif)
 
-- ### Sliding
+- ### " New Background Music On Level 2 "
 
-    > Player have the ability to perform a slide action whenever they start moving left or right direction.
+    > Just another chillax bgm on level 2
+    
+    Proceed through the door from level 1 to access.
 
-    This one is pretty straightforward, since sliding technically makes the character duck thus having smaller hitbox, so i started with disabling the current standing hitbox and enable the sliding hitboxes. Lastly, load the sprite animation for sliding.
-
-    ```go
-        // Player.gd
-
-        elif Input.is_action_pressed("slide"):
-            $StandingHitbox.disabled = true
-            $SlidingHitbox.disabled = false
-            $AnimatedSprite.play("slide")
-    ```
+    ![](Level2.gif)
 
 ##
 ## 🖮 Control & Keybinds 🖮
