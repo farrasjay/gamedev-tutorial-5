@@ -1,0 +1,180 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://assets/sound/grasslands.mp3" type="AudioStream" id=1]
+[ext_resource path="res://Scenes/Ground.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Player.gd" type="Script" id=3]
+[ext_resource path="res://assets/kenney_platformercharacters/PNG/Female/Poses/female_duck.png" type="Texture" id=4]
+[ext_resource path="res://assets/kenney_platformercharacters/PNG/Female/female_tilesheet.png" type="Texture" id=5]
+[ext_resource path="res://assets/kenney_platformercharacters/PNG/Female/Poses/female_slide.png" type="Texture" id=6]
+[ext_resource path="res://scenes/Dash.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/kenney_platformercharacters/Items/flag animation.png" type="Texture" id=8]
+[ext_resource path="res://scenes/AnimatedSprite.gd" type="Script" id=9]
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 79, 110 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 80, 110 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 5 )
+region = Rect2( 0, 120, 79, 104 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 5 )
+region = Rect2( 80, 120, 79, 104 )
+
+[sub_resource type="SpriteFrames" id=11]
+animations = [ {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 10 ) ],
+"loop": true,
+"name": "slide",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "walk",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=12]
+radius = 24.0
+height = 32.0
+
+[sub_resource type="CapsuleShape2D" id=13]
+radius = 24.0
+height = 16.0
+
+[sub_resource type="AtlasTexture" id=14]
+flags = 4
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 60, 60 )
+
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 8 )
+region = Rect2( 60, 0, 60, 60 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 8 )
+region = Rect2( 120, 0, 60, 60 )
+
+[sub_resource type="AtlasTexture" id=17]
+flags = 4
+atlas = ExtResource( 8 )
+region = Rect2( 180, 0, 60, 60 )
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 8 )
+region = Rect2( 240, 0, 60, 60 )
+
+[sub_resource type="SpriteFrames" id=19]
+animations = [ {
+"frames": [ SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+} ]
+
+[node name="Level2" type="Node2D"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 760, 660 )
+stream = ExtResource( 1 )
+volume_db = -6.0
+autoplay = true
+
+[node name="Tiles" type="Node2D" parent="."]
+position = Vector2( 100, 675 )
+
+[node name="Ground" parent="Tiles" instance=ExtResource( 2 )]
+position = Vector2( 507, 363 )
+
+[node name="Ground2" parent="Tiles" instance=ExtResource( 2 )]
+position = Vector2( 155, 363 )
+
+[node name="Ground3" parent="Tiles" instance=ExtResource( 2 )]
+position = Vector2( 859, 363 )
+
+[node name="Ground4" parent="Tiles" instance=ExtResource( 2 )]
+position = Vector2( 1211, 363 )
+
+[node name="Ground5" parent="Tiles" instance=ExtResource( 2 )]
+position = Vector2( 1352, 150 )
+rotation = -1.5708
+
+[node name="Ground6" parent="Tiles" instance=ExtResource( 2 )]
+position = Vector2( 1352, -204 )
+rotation = -1.5708
+
+[node name="Ground7" parent="Tiles" instance=ExtResource( 2 )]
+position = Vector2( 1140, -345 )
+
+[node name="Ground8" parent="Tiles" instance=ExtResource( 2 )]
+position = Vector2( 788, -345 )
+
+[node name="Ground9" parent="Tiles" instance=ExtResource( 2 )]
+position = Vector2( 435, -345 )
+
+[node name="Ground10" parent="Tiles" instance=ExtResource( 2 )]
+position = Vector2( 81, -345 )
+
+[node name="Ground11" parent="Tiles" instance=ExtResource( 2 )]
+position = Vector2( -59, -133 )
+rotation = 1.5708
+
+[node name="Ground12" parent="Tiles" instance=ExtResource( 2 )]
+position = Vector2( -59, 222 )
+rotation = 1.5708
+
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( 125, 950 )
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="Player"]
+visible = false
+position = Vector2( 0.999985, -14 )
+scale = Vector2( 0.85625, 1.04545 )
+texture = ExtResource( 4 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
+position = Vector2( 1, -14 )
+scale = Vector2( 0.85625, 1.04545 )
+frames = SubResource( 11 )
+animation = "slide"
+
+[node name="StandingHitbox" type="CollisionShape2D" parent="Player"]
+position = Vector2( 2, 2 )
+shape = SubResource( 12 )
+
+[node name="SlidingHitbox" type="CollisionShape2D" parent="Player"]
+visible = false
+position = Vector2( 2, 10 )
+shape = SubResource( 13 )
+
+[node name="Dash" parent="Player" instance=ExtResource( 7 )]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+zoom = Vector2( 0.5, 0.5 )
+smoothing_speed = 10.0
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 780, 925 )
+scale = Vector2( 3, 3 )
+frames = SubResource( 19 )
+animation = "idle"
+script = ExtResource( 9 )

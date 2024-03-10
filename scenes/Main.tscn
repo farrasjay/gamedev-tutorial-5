@@ -1,0 +1,279 @@
+[gd_scene load_steps=33 format=2]
+
+[ext_resource path="res://Scenes/Ground.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Player.gd" type="Script" id=2]
+[ext_resource path="res://assets/kenney_platformercharacters/PNG/Female/female_tilesheet.png" type="Texture" id=3]
+[ext_resource path="res://scenes/Dash.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/kenney_platformercharacters/PNG/Female/Poses/female_duck.png" type="Texture" id=5]
+[ext_resource path="res://assets/kenney_platformercharacters/PNG/Female/Poses/female_slide.png" type="Texture" id=6]
+[ext_resource path="res://assets/kenney_platformercharacters/Tiles/switchYellow.png" type="Texture" id=7]
+[ext_resource path="res://scenes/KeyItem.gd" type="Script" id=8]
+[ext_resource path="res://assets/kenney_platformercharacters/Tiles/doorClosed_mid.png" type="Texture" id=9]
+[ext_resource path="res://scenes/Door.gd" type="Script" id=10]
+[ext_resource path="res://assets/sound/bgm2.mp3" type="AudioStream" id=11]
+[ext_resource path="res://assets/sound/PressurePlate.wav" type="AudioStream" id=12]
+[ext_resource path="res://assets/sound/DoorOpen.wav" type="AudioStream" id=13]
+[ext_resource path="res://scenes/OnDoorEntered.gd" type="Script" id=14]
+[ext_resource path="res://assets/kenney_platformercharacters/Tiles/switchYellow_pressed.png" type="Texture" id=15]
+[ext_resource path="res://assets/kenney_platformercharacters/Tiles/doorOpen_mid.png" type="Texture" id=16]
+
+[sub_resource type="AtlasTexture" id=14]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 15 )
+region = Rect2( 0, 0, 128, 128 )
+
+[sub_resource type="SpriteFrames" id=16]
+animations = [ {
+"frames": [ SubResource( 14 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 15 ) ],
+"loop": true,
+"name": "pressed",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 34.5, 17 )
+
+[sub_resource type="RectangleShape2D" id=20]
+extents = Vector2( 37.4519, 10 )
+
+[sub_resource type="AtlasTexture" id=17]
+flags = 4
+atlas = ExtResource( 9 )
+region = Rect2( 0, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 16 )
+region = Rect2( 0, 0, 128, 128 )
+
+[sub_resource type="SpriteFrames" id=19]
+animations = [ {
+"frames": [ SubResource( 17 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 18 ) ],
+"loop": true,
+"name": "opened",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 21, 58.5 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 79, 110 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 80, 110 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 120, 79, 104 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 80, 120, 79, 104 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 10 ) ],
+"loop": true,
+"name": "slide",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "walk",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=8]
+radius = 24.0
+height = 32.0
+
+[sub_resource type="CapsuleShape2D" id=9]
+radius = 24.0
+height = 16.0
+
+[node name="Main" type="Node2D"]
+position = Vector2( 451, 675 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 700, 0 )
+stream = ExtResource( 11 )
+volume_db = -6.0
+autoplay = true
+
+[node name="Tiles" type="Node2D" parent="."]
+
+[node name="Ground" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 507, 363 )
+
+[node name="Ground2" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 155, 363 )
+
+[node name="Ground3" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 859, 363 )
+
+[node name="Ground4" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 1211, 363 )
+
+[node name="Ground5" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 1352, 150 )
+rotation = -1.5708
+
+[node name="Ground6" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 1352, -204 )
+rotation = -1.5708
+
+[node name="Ground7" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 1140, -345 )
+
+[node name="Ground8" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 788, -345 )
+
+[node name="Ground9" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 435, -345 )
+
+[node name="Ground10" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 81, -345 )
+
+[node name="Ground11" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( -59, -133 )
+rotation = 1.5708
+
+[node name="Ground12" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( -59, 222 )
+rotation = 1.5708
+
+[node name="Ground13" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 677, 226 )
+
+[node name="Ground14" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 1139, 80 )
+
+[node name="Ground15" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 153, -133 )
+
+[node name="Ground16" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 472, -77 )
+rotation = 0.349066
+
+[node name="Ground18" parent="Tiles" instance=ExtResource( 1 )]
+position = Vector2( 1100, -220 )
+rotation = 1.5708
+scale = Vector2( 0.516487, -0.611488 )
+
+[node name="PressurePlate" type="Area2D" parent="."]
+position = Vector2( 47, -199 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="PressurePlate"]
+stream = ExtResource( 12 )
+volume_db = 6.0
+
+[node name="Ground17" parent="PressurePlate" instance=ExtResource( 1 )]
+position = Vector2( 1053, 154 )
+rotation = 1.5708
+scale = Vector2( 0.516487, -0.611488 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="PressurePlate"]
+scale = Vector2( 0.578, 0.484 )
+frames = SubResource( 16 )
+animation = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PressurePlate"]
+position = Vector2( -0.5, 7 )
+shape = SubResource( 11 )
+
+[node name="OnDoorEntered" type="Area2D" parent="."]
+position = Vector2( 1165, 0 )
+scale = Vector2( 2, 2.04 )
+script = ExtResource( 14 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="OnDoorEntered"]
+position = Vector2( 43.5, -9.80392 )
+scale = Vector2( 0.5, 0.490196 )
+stream = ExtResource( 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OnDoorEntered"]
+position = Vector2( 28.55, 0 )
+scale = Vector2( 1.04, 1 )
+shape = SubResource( 20 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="OnDoorEntered"]
+position = Vector2( 44.5, -8.33334 )
+scale = Vector2( 0.5, 0.490196 )
+frames = SubResource( 19 )
+animation = "idle"
+
+[node name="Door" type="Area2D" parent="."]
+position = Vector2( 1252, -20 )
+script = ExtResource( 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
+position = Vector2( 26, 2.5 )
+shape = SubResource( 12 )
+
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( 10, 285 )
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="Player"]
+visible = false
+position = Vector2( 0.999985, -14 )
+scale = Vector2( 0.85625, 1.04545 )
+texture = ExtResource( 5 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
+position = Vector2( 1, -14 )
+scale = Vector2( 0.85625, 1.04545 )
+frames = SubResource( 4 )
+animation = "slide"
+
+[node name="StandingHitbox" type="CollisionShape2D" parent="Player"]
+position = Vector2( 2, 2 )
+shape = SubResource( 8 )
+
+[node name="SlidingHitbox" type="CollisionShape2D" parent="Player"]
+visible = false
+position = Vector2( 2, 10 )
+shape = SubResource( 9 )
+
+[node name="Dash" parent="Player" instance=ExtResource( 4 )]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+zoom = Vector2( 0.5, 0.5 )
+smoothing_speed = 10.0
+
+[connection signal="body_entered" from="PressurePlate" to="PressurePlate" method="_on_PressurePlate_body_entered"]
+[connection signal="body_entered" from="OnDoorEntered" to="OnDoorEntered" method="_on_OnDoorEntered_body_entered"]
+[connection signal="body_exited" from="OnDoorEntered" to="OnDoorEntered" method="_on_OnDoorEntered_body_exited"]
+[connection signal="body_entered" from="Door" to="Door" method="_on_Door_body_entered"]
